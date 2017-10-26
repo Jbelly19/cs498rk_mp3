@@ -46,7 +46,7 @@ router.get('/', function(req, res){
             exec(function(err, users){
             if(err){
                 res.status(500).send({
-                    message: "Unable to get the count of Users.",
+                    message: "Unable to get the User count.",
                     data: [],
                 })
             }else{
@@ -85,7 +85,7 @@ router.post('/', function(req, res){
     //email and name validation here
     if(!req.body.email || !req.body.name){
         return res.status(400).send({
-            message:'Valid email and name required'.,
+            message:'Valid email and name required.',
             data: [],
         })
     }
