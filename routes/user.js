@@ -6,6 +6,10 @@ const querystring = require('querystring');
 router.get('/', function(req, res){
 
         let where_obj = req.query.where;
+
+        // console.log(eval(`( ${where_obj} )`));
+        
+
         if(where_obj != undefined){
             where_obj = JSON.parse(where_obj);
         }
@@ -79,36 +83,53 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
     //email and name validation here
-    User.findOne({email: req.body.emal}, (err, user)=>{
-        if(err){
-            res.status(500).send({
-                message: err,
-                data: [],
-            })
-        }else if(user){
-            res.status(403).send({
-                message: "User with that email already exists",
-                data: [],
-            })
-        }
-    })
     let newUser = new User({
         name: req.body.name, 
         email: req.body.email,
     })
-    newUser.save(function(err, product, numAffected){
+
+    //sanity check for name and email
+
+    User.findOne({email: req.body.email}, (err, user)=>{
         if(err){
-            res.status(500).send({
+            return res.status(500).send({
                 message: err,
                 data: [],
             })
-        }else{
-            res.status(201).send({
-                message: 'OK',
-                data: product,
+        } else if(user){
+            return res.status(403).send({
+                message: "User with that email already exists",
+                data: [],
             })
         }
+        User.create(newUser, (err, user) => {
+            if(err){
+                return res.status(500).send({
+                    message: err,
+                    data: [],
+                })
+            }else{
+                return res.status(201).send({
+                    message: 'OK',
+                    data: user,
+                })
+            }
+        })
     })
+    
+    // newUser.save(function(err, product, numAffected){
+    //     if(err){
+    //         res.status(500).send({
+    //             message: err,
+    //             data: [],
+    //         })
+    //     }else{
+    //         res.status(201).send({
+    //             message: 'OK',
+    //             data: product,
+    //         })
+    //     }
+    // })
 });
 
 router.get('/:id', function(req, res){

@@ -9,7 +9,7 @@ var TaskSchema = new mongoose.Schema({
     completed: {type: Boolean, default: false},
     assignedUser: { type: String, default: '' },
     assignedUserName: { type: String, default: 'unassigned' },
-    dateCreate:{type:Date, default: Date.now}
+    dateCreated:{type:Date, default: Date.now}
 });
 
 // Export the Mongoose model

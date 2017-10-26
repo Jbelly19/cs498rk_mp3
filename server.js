@@ -14,6 +14,8 @@ var port = process.env.PORT || 3000;
 // Connect to a MongoDB
 mongoose.connect(secrets.mongo_connection);
 
+mongoose.Promise = global.Promise
+
 // Allow CORS so that backend and frontend could be put on different servers
 var allowCrossDomain = function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -35,8 +37,8 @@ let taskRoute = require('./routes/task.js')
 
 // Use routes as a module (see index.js)
 // require('./routes')(app, router);
-app.use('/api/user', userRoute);
-app.use('/api/task', taskRoute);
+app.use('/api/users', userRoute);
+app.use('/api/tasks', taskRoute);
 
 // Start the server
 app.listen(port);
