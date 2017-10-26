@@ -154,7 +154,7 @@ router.put('/:id', function(req, res){
                 data: []
             })
         }else if(task){
-            res.status(201).send({
+            res.status(200).send({
                 message: 'OK',
                 data: task,
             })
