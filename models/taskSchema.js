@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 var TaskSchema = new mongoose.Schema({
     name: String,
     description: String,
-    completed: Boolean,
+    deadline: Date,
+    completed: {type: Boolean, default: false},
     assignedUser: { type: String, default: '' },
     assignedUserName: { type: String, default: 'unassigned' },
     dateCreate:{type:Date, default: Date.now}

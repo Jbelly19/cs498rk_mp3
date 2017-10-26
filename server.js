@@ -8,8 +8,8 @@ var express = require('express'),
 // Create our Express application
 var app = express();
 
-// Use environment defined port or 4000
-var port = process.env.PORT || 4000;
+// Use environment defined port or 3000
+var port = process.env.PORT || 3000;
 
 // Connect to a MongoDB
 mongoose.connect(secrets.mongo_connection);
@@ -29,9 +29,23 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+//include routes
+let userRoute = require('./routes/user.js')
+let taskRoute = require('./routes/task.js')
+
 // Use routes as a module (see index.js)
-require('./routes')(app, router);
+// require('./routes')(app, router);
+app.use('/api/user', userRoute);
+app.use('/api/task', taskRoute);
 
 // Start the server
 app.listen(port);
 console.log('Server running on port ' + port);
+
+
+/*
+    references:
+    http://mongoosejs.com/docs/index.html
+    https://coursework.vschool.io/mongoose-crud/
+    https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
+*/
