@@ -139,14 +139,14 @@ router.put('/:id', function(req, res){
             data: [],
         })
     }
-    let updatedTask = new Task({
+    let updatedTask = {
         name: req.body.name,
         description: req.body.description,
         deadline: req.body.deadline,
         assignedUser: req.body.assignedUser,
         assignedUserName: req.body.assignedUserName,
         completed: req.body.completed,
-    })
+    }
     Task.findByIdAndUpdate(req.params.id, {$set:updatedTask}, {new: true}, (err, task)=>{
         if(err){
             res.status(500).send({
