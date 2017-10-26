@@ -133,7 +133,7 @@ router.get('/:id', function(req, res){
 
 router.put('/:id', function(req, res){
     //name and deadline validation here
-    if(!name || !deadline){
+    if(!req.body.name || !req.body.deadline){
         res.status(400).send({
             message:'Valid name and deadline required.',
             data: [],
