@@ -149,7 +149,7 @@ router.get('/:id', function(req, res){
 router.put('/:id', function(req, res){
     //need to do email and name validation here
     if(!req.body.name || !req.body.email ){
-        res.status(400).send({
+        return res.status(400).send({
             message:'Valid email and name required.',
             data: [],
         })
