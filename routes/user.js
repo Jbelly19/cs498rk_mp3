@@ -46,7 +46,7 @@ router.get('/', function(req, res){
             exec(function(err, users){
             if(err){
                 res.status(500).send({
-                    message: err,
+                    message: "Unable to get the count of Users.",
                     data: [],
                 })
             }else{
@@ -66,7 +66,7 @@ router.get('/', function(req, res){
             exec(function(err, users){
             if(err){
                 res.status(500).send({
-                    message: err,
+                    message: "Unable to get the list of Users.",
                     data: [],
                 })
             }else{
@@ -85,7 +85,7 @@ router.post('/', function(req, res){
     //email and name validation here
     if(!req.body.email || !req.body.name){
         return res.status(400).send({
-            message:'Valid email and name required',
+            message:'Valid email and name required'.,
             data: [],
         })
     }
@@ -99,12 +99,12 @@ router.post('/', function(req, res){
     User.findOne({email: req.body.email}, (err, user)=>{
         if(err){
             return res.status(500).send({
-                message: err,
+                message: "Unable to create User.",
                 data: [],
             })
         } else if(user){
             return res.status(403).send({
-                message: "User with that email already exists",
+                message: "User with that email already exists.",
                 data: [],
             })
         }
@@ -129,7 +129,7 @@ router.get('/:id', function(req, res){
     User.findById(req.params.id, (err, user) =>{
         if(err){
             res.status(500).send({
-                message: err,
+                message: "Unable to get specified user.",
                 data: [],
             })
         }else if(user){
@@ -161,7 +161,7 @@ router.put('/:id', function(req, res){
     User.findByIdAndUpdate(req.params.id, {$set: updatedUser}, {new: true}, (err, user)=>{
         if(err){
             res.status(500).send({
-                message: err,
+                message: "Unable to update the specified User.",
                 data: []
             })
         }else if(user){
@@ -183,7 +183,7 @@ router.delete('/:id', function(req, res){
     User.findByIdAndRemove(req.params.id, (err, user)=>{
         if(err){
             res.status(500).send({
-                message: err,
+                message: "Unable to delete the specified User.",
                 data: []
             })
         }else if(user){

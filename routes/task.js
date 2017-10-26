@@ -44,7 +44,7 @@ router.get('/', function(req, res){
             exec(function(err, users){
             if(err){
                 res.status(500).send({
-                    message: err,
+                    message: "Unable to get the Task count",
                     data: [],
                 })
             }else{
@@ -64,7 +64,7 @@ router.get('/', function(req, res){
             exec(function(err, users){
             if(err){
                 res.status(500).send({
-                    message: err,
+                    message: "Unable to get the list of Tasks.",
                     data: [],
                 })
             }else{
@@ -98,7 +98,7 @@ router.post('/', function(req, res){
     newTask.save(function(err, product, numAffected){
         if(err){
             return res.status(500).send({
-                message: err,
+                message: "Unable to create the Task.",
                 data: [],
             })
         }else{
@@ -114,7 +114,7 @@ router.get('/:id', function(req, res){
     Task.findById(req.params.id, (err, task)=>{
         if(err){
             res.status(500).send({
-                message: err,
+                message: "Unable to get the specified Task.",
                 data: [],
             })
         }else if(task){
@@ -150,7 +150,7 @@ router.put('/:id', function(req, res){
     Task.findByIdAndUpdate(req.params.id, {$set:updatedTask}, {new: true}, (err, task)=>{
         if(err){
             res.status(500).send({
-                message: err,
+                message: "Unable to update the specified Task.",
                 data: []
             })
         }else if(task){
@@ -171,7 +171,7 @@ router.delete('/:id', function(req, res){
     Task.findByIdAndRemove(req.params.id, (err, task)=>{
         if(err){
             res.status(500).send({
-                message: err,
+                message: "Unable to delete the specified Task.",
                 data: []
             })
         }else if(task){
