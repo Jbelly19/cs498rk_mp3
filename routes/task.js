@@ -147,7 +147,7 @@ router.put('/:id', function(req, res){
         assignedUserName: req.body.assignedUserName,
         completed: req.body.completed,
     })
-    User.findByIdAndUpdate(req.params.id, {$set:updatedTask}, {new: true}, (err, task)=>{
+    Task.findByIdAndUpdate(req.params.id, {$set:updatedTask}, {new: true}, (err, task)=>{
         if(err){
             res.status(500).send({
                 message: err,
@@ -168,7 +168,7 @@ router.put('/:id', function(req, res){
 });
 
 router.delete('/:id', function(req, res){
-    User.findByIdAndRemove(req.params.id, (err, task)=>{
+    Task.findByIdAndRemove(req.params.id, (err, task)=>{
         if(err){
             res.status(500).send({
                 message: err,
