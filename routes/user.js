@@ -83,12 +83,18 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
     //email and name validation here
+    if(!req.body.email || !req.body.name){
+        return res.status(400).send({
+            message:'Valid email and name required',
+            data: [],
+        })
+    }
+
     let newUser = new User({
         name: req.body.name, 
         email: req.body.email,
     })
 
-    //sanity check for name and email
 
     User.findOne({email: req.body.email}, (err, user)=>{
         if(err){
@@ -116,20 +122,7 @@ router.post('/', function(req, res){
             }
         })
     })
-    
-    // newUser.save(function(err, product, numAffected){
-    //     if(err){
-    //         res.status(500).send({
-    //             message: err,
-    //             data: [],
-    //         })
-    //     }else{
-    //         res.status(201).send({
-    //             message: 'OK',
-    //             data: product,
-    //         })
-    //     }
-    // })
+  
 });
 
 router.get('/:id', function(req, res){
@@ -157,7 +150,7 @@ router.put('/:id', function(req, res){
     //need to do email and name validation here
     if(!req.body.name || !req.body.email ){
         res.status(400).send({
-            message:'Valid email and name required',
+            message:'Valid email and name required.',
             data: [],
         })
     }

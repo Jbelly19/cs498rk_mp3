@@ -5,6 +5,7 @@ const querystring = require('querystring');
 
 router.get('/', function(req, res){
     let where_obj = req.query.where;
+
     if(where_obj != undefined){
         where_obj = JSON.parse(where_obj);
     }
@@ -33,30 +34,57 @@ router.get('/', function(req, res){
 
     count_obj = req.query.count;
 
-    Task.find(query, (err, tasks)=>{
-        if(err){
-            res.status(500).send({
-                message: err,
-                data: [],
-            })
-        }else{
-            res.status(200).send({
-                message: 'OK',
-                data: tasks,
-            })
-        }
-    })
+    if(count_obj){
+        Task.
+            count(where_obj).
+            limit(limit_obj).
+            sort(sort_obj).
+            select(select_obj).
+            skip(skip_obj).
+            exec(function(err, users){
+            if(err){
+                res.status(500).send({
+                    message: err,
+                    data: [],
+                })
+            }else{
+                res.status(200).send({
+                    message: 'OK',
+                    data: users,
+                })
+            }
+        });
+    }else{
+        Task.
+            find(where_obj).
+            limit(limit_obj).
+            sort(sort_obj).
+            select(select_obj).
+            skip(skip_obj).
+            exec(function(err, users){
+            if(err){
+                res.status(500).send({
+                    message: err,
+                    data: [],
+                })
+            }else{
+                res.status(200).send({
+                    message: 'OK',
+                    data: users,
+                })
+            }
+        });
+    }
+    
 });
 
 router.post('/', function(req, res){
-    //need to check for a name and a duedate
-    //also not sure if im supposed to assign to user
+    //need to check for a name and a due date
     if(!req.body.name || !req.body.deadline){
-        res.status(400).send({
-            message:'Valid email and name required',
+        return res.status(400).send({
+            message:'Valid name and deadline required',
             data: [],
         })
-        return;//will this bail from the function like i want it to?
     }
     let newTask = new Task({
         name: req.body.name,
@@ -66,6 +94,7 @@ router.post('/', function(req, res){
         assignedUserName: req.body.assignedUserName,
         completed: req.body.completed,
     })
+
     newTask.save(function(err, product, numAffected){
         if(err){
             return res.status(500).send({
@@ -106,7 +135,7 @@ router.put('/:id', function(req, res){
     //name and deadline validation here
     if(!name || !deadline){
         res.status(400).send({
-            message:'Valid email and name required',
+            message:'Valid name and deadline required.',
             data: [],
         })
     }
