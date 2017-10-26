@@ -68,12 +68,12 @@ router.post('/', function(req, res){
     })
     newTask.save(function(err, product, numAffected){
         if(err){
-            res.status(500).send({
+            return res.status(500).send({
                 message: err,
                 data: [],
             })
         }else{
-            res.status(201).send({
+            return res.status(201).send({
                 message: "OK",
                 data: product,
             })
