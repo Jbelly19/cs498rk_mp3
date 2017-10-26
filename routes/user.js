@@ -166,7 +166,7 @@ router.put('/:id', function(req, res){
             })
         }else if(user){
             //send back the new user
-            res.status(201).send({
+            res.status(200).send({
                 message: 'OK',
                 data: user,
             })
